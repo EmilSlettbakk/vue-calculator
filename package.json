@@ -1,18 +1,32 @@
 {
   "name": "vue-calculator",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "json-server --watch db.json",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
-    "vue": "^3.3.11"
+    "@vue/test-utils": "^2.4.4",
+    "axios": "^1.6.7",
+    "vue": "^3.4.15",
+    "vue-router": "^4.2.5",
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.5.2",
-    "vite": "^5.0.10"
-  }
+    "@vitejs/plugin-vue": "^5.0.3",
+    "cypress": "^13.6.4",
+    "vite": "^5.0.12",
+    "vitest": "^1.2.2"
+  },
+  "keywords": [
+    "e2e",
+    "tests",
+    "cypress"
+  ],
+  "author": "Emil Slettbakk"
 }

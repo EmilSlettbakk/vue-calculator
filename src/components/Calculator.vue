@@ -1,7 +1,6 @@
 <template>
   <div class="calculator">
     <input v-model="input" class="calculator-screen" disabled>
-
     <div class="calculator-keys">
       <button class="operator all-clear" @click="clearInput">AC</button>
       <button @click="appendInput(7)">7</button>
@@ -99,8 +98,10 @@ export default {
 
 <style>
 .calculator {
+  flex: 0 0 auto;
   grid-column: 1;
-  max-width: 320px;
+  width: 320px;
+  height: 480px;
   border: 1px solid #ccc;
   background: rgba(51, 51, 51, 0.7);
   border-radius: 10px;
@@ -122,10 +123,15 @@ export default {
 .calculator-keys {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  box-sizing: border-box;
 }
 
 .calculator-keys button {
-  padding: 20px;
-  font-size: 20px;
+  padding: 1em;
+  font-size: 1.25em;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-after-overflow: ellipsis;
 }
 </style>
