@@ -89,7 +89,6 @@ export default {
 
       this.$emit('new-calculation', toLog);
 
-      this.input = '';
       this.operator = null;
     }
   }
