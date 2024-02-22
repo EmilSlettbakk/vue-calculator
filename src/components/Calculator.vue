@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -55,41 +57,33 @@ export default {
       this.operatorClicked = true;
     },
     calculateResult() {
-      let result = 0;
       const prev = parseFloat(this.prevValue);
+      const op = this.operator;
       const current = parseFloat(this.input);
-
-      if(Number.isNaN(prev) || Number.isNaN(current)) {
-        this.input = 'ERROR NaN VALUE';
+      if (Number.isNaN(prev) || Number.isNaN(current)) {
+        this.input = 'ERROR: NaN VALUE';
         return;
       }
-      if(this.operator === '/' && current === 0){
-        this.input = 'ERROR DIVE BY 0';
+      if (op === '/' && current === 0) {
+        this.input = 'ERROR: DIV BY 0';
         return;
       }
-      switch (this.operator) {
-        case '+':
-          result = prev + current;
-          break;
-        case '-':
-          result = prev - current;
-          break;
-        case '*':
-          result = prev * current;
-          break;
-        case '/':
-          result = prev / current;
-          break;
-        default:
-          return;
-      }
-      let toLog = `${this.prevValue} ${this.operator} ${this.input} = ${result}`;
-
-      this.input = result;
-
-      this.$emit('new-calculation', toLog);
-
+      axios.post('http://localhost:8080/api/calculation', {
+        operand1: prev,
+        operand2: current,
+        operation: op
+      }).then(response => {
+        const result = response.data.result;
+        this.input = result.toString();
+        const toLog = `${prev} ${op} ${current} = ${result}`;
+        this.$emit('new-calculation', toLog);
+      }).catch(error => {
+        console.error(error);
+        this.input = 'ERROR: Calculation failed';
+      });
+      this.prevValue = '';
       this.operator = null;
+      this.operatorClicked = false;
     }
   }
 }
